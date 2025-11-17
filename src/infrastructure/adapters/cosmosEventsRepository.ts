@@ -16,8 +16,16 @@ async function add(event: Event): Promise<void>{
     await container.items.create(event);
 };
 
+
+async function update(id: string, payload: Record<string, any>): Promise<void>{
+    await container.item(id, id).patch([
+        { op: "replace", path: "/payload", value: payload }
+    ]);
+};
+
 const cosmosEventsRepository = {
-    add: add
+    add: add,
+    update: update
 } satisfies EventsRepository;
 
 export default cosmosEventsRepository;
