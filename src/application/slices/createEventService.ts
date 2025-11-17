@@ -1,4 +1,4 @@
-import { Event } from "undici-types/patch";
+import { Event } from "../../models";
 import { EventsRepository } from "../ports";
 
 export default async function store(
