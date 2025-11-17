@@ -1,5 +1,7 @@
 import { CosmosClient } from "@azure/cosmos";
 import { DefaultAzureCredential } from "@azure/identity";
+import { EventsRepository } from "../../application/ports";
+import { Event } from "../../models";
 
 const credential = new DefaultAzureCredential();
 const client = new CosmosClient({
@@ -10,7 +12,10 @@ const client = new CosmosClient({
 const database = client.database("EventsService");
 const container = database.container("EventsService");
 
-export default async function add(event: Event): Promise<void>{
+async function add(event: Event): Promise<void>{
     await container.items.create(event);
 };
 
+const CosmosEventsRepository = {
+    add: add
+} satisfies EventsRepository;
