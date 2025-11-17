@@ -1,6 +1,6 @@
 import { app, InvocationContext } from '@azure/functions';
-import CreateEventService from '../application/slices/createEventService';
-import CosmosEventsRepository from '../infrastructure/adapters/cosmosEventsRepository';
+import createEventService from '../application/slices/createEventService';
+import cosmosEventsRepository from '../infrastructure/adapters/cosmosEventsRepository';
 import { Event } from '../models';
 
 app.serviceBusTopic('serviceTopicTrigger', {
@@ -9,7 +9,7 @@ app.serviceBusTopic('serviceTopicTrigger', {
     subscriptionName: 'pollymapper-events',
     handler: (message: Event, context: InvocationContext) => {
         context.log('Processing message:', message);
-        CreateEventService.store(message, CosmosEventsRepository);
+        createEventService.store(message, cosmosEventsRepository);
         context.log('Completed message:', message);
     }
 });

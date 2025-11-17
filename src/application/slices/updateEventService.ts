@@ -1,4 +1,3 @@
-import { Event } from "../../models";
 import { EventsRepository } from "../ports";
 
 async function modify(

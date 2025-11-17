@@ -1,15 +1,15 @@
 import { app, InvocationContext } from '@azure/functions';
-import updateEventService from '../application/slices/updateEventService';
+import deleteEventService from '../application/slices/deleteEventService';
 import cosmosEventsRepository from '../infrastructure/adapters/cosmosEventsRepository';
 import { Event } from '../models';
 
 app.serviceBusTopic('serviceTopicTrigger', {
     connection: 'ServiceBusConnection',
-    topicName: 'PolyMapper.UpdateEvent',
+    topicName: 'PolyMapper.DeleteEvent',
     subscriptionName: 'pollymapper-events',
     handler: (message: Event, context: InvocationContext) => {
         context.log('Processing message:', message);
-        updateEventService.modify(message.id, message.payload, cosmosEventsRepository);
+        deleteEventService.deleteEvent(message.id, cosmosEventsRepository);
         context.log('Completed message:', message);
     }
 });

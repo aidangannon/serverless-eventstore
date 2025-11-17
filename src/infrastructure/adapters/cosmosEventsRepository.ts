@@ -23,9 +23,14 @@ async function update(id: string, payload: Record<string, any>): Promise<void>{
     ]);
 };
 
+async function deleteEvent(id: string): Promise<void>{
+    await container.item(id, id).delete();
+};
+
 const cosmosEventsRepository = {
     add: add,
-    update: update
+    update: update,
+    deleteEvent: deleteEvent
 } satisfies EventsRepository;
 
 export default cosmosEventsRepository;
